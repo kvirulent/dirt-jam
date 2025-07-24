@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://xbkj41ovncl5"]
+
+[ext_resource type="Script" uid="uid://dfl4252pp3cr5" path="res://Scripts/draw_terrain.gd" id="1_pq8q7"]
+
+[sub_resource type="Environment" id="Environment_vho56"]
+background_mode = 1
+background_color = Color(0.239216, 0.239216, 0.239216, 1)
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_pq8q7"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("1_pq8q7")
+regenerate = false
+wireframe = false
+debug = false
+noise_seed = 310
+offset = Vector3(0, 0, 0)
+side_length = 1000
+mesh_scale = 1.0
+zoom = 186.5
+gradient_rotation = -36.87
+height_scale = 119.5
+metadata/_custom_type_script = "uid://dfl4252pp3cr5"
+
+[sub_resource type="Compositor" id="Compositor_pq8q7"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pq8q7")])
+
+[node name="Root" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10.9471)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_vho56")
+compositor = SubResource("Compositor_pq8q7")
