@@ -7,10 +7,11 @@ This is a Godot project built for [Acerola's Dirt Jam](https://itch.io/jam/acero
 7/24/25 - Initial Git commit. After much business this month, I finally got the basic terrain generation vertex and fragment shaders working! Some color improvements still need to be made to the fragment shader though.
 
 # Improvements
-None yet!
+- Simple distance-based fog
+- Distance-based noise intensity scaling
 
 # Project Goals
-- Distance-based fog
+- ~~Distance-based fog~~
 - Distance-based LOD
 - Shader includes
 - Improved hash function

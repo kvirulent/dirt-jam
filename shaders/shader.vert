@@ -10,6 +10,7 @@ layout(set = 0, binding = 0, std140) uniform UniformBufferObject {
 	float _Scale;
 	float _Seed;
 	vec3 _Offset;
+	vec3 _CameraPosition;
 };
 
 
@@ -157,7 +158,7 @@ void main() {
 	vec3 noise_pos = (pos + vec3(_Offset.x, 0, _Offset.z)) / _Scale;
 	vec3 n = fbm(noise_pos.xz);
 
-	pos.y += _TerrainHeight * n.x + _TerrainHeight - _Offset.y;
+	pos.y += (clamp((_TerrainHeight * distance(pos, vec3(0,0,0))) * 0.03, -250, 250)) * n.x + _TerrainHeight - _Offset.y;
 
 	gl_Position = MVP * vec4(pos, 1);
 }

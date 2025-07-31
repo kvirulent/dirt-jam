@@ -14,6 +14,7 @@ class_name DrawTerrainMesh extends CompositorEffect
 
 var transform: Transform3D
 var light: DirectionalLight3D
+var camera: Camera3D
 
 var rd: RenderingDevice
 var p_framebuffer: RID
@@ -48,7 +49,9 @@ func _init():
 	
 	var tree := Engine.get_main_loop() as SceneTree
 	var root: Node = tree.edited_scene_root if Engine.is_editor_hint() else tree.current_scene
-	if root: light = root.get_node_or_null('DirectionalLight3D')
+	if root: 
+		light = root.get_node_or_null('DirectionalLight3D')
+		camera = root.get_viewport().get_camera_3d()
 
 # Compile the shader
 func compile_shader(vertex_shader: String, fragment_shader: String) -> RID:
@@ -238,7 +241,18 @@ func _render_callback(_effect_callback_type: int, render_data: RenderData):
 	
 	var model_view = Projection(view * model)
 	var MVP = projection * model_view
-	
+
+	var camera_position = Vector3(0,1,0)
+
+	if not camera:
+		var tree := Engine.get_main_loop() as SceneTree
+		var root : Node = tree.edited_scene_root if Engine.is_editor_hint() else tree.current_scene
+		camera = root.get_node_or_null("Camera3D")
+		if not camera:
+			push_error("No camera detected")
+	else:
+		camera_position = camera.position
+
 	# Write the GPU buffer
 	for i in range(0, 16):
 		buffer.push_back(MVP[i / 4][i % 4])
@@ -251,6 +265,11 @@ func _render_callback(_effect_callback_type: int, render_data: RenderData):
 	buffer.push_back(offset.y)
 	buffer.push_back(offset.z)
 	buffer.push_back(1.0)
+	buffer.push_back(camera_position.x)
+	buffer.push_back(camera_position.y)
+	buffer.push_back(camera_position.z)
+	buffer.push_back(1.0)
+
 	
 		
 	# Pack all our buffer data to send to the GPU

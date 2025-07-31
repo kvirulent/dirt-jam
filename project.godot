@@ -12,7 +12,7 @@ config_version=5
 
 config/name="terrain_2"
 run/main_scene="uid://xbkj41ovncl5"
-config/features=PackedStringArray("4.4", "C#", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
